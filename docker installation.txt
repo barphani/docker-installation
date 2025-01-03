@@ -1,0 +1,61 @@
+docker installation***
+
+
+==search >> docker install  >> install docker docs >> rhel = centos(same to same) 
+
+--- uninstall docker = sudo dnf remove docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-engine \
+                  podman \
+                  runc
+
+---setup repository and plugins-core ==>>  
+sudo dnf -y install dnf-plugins-core
+sudo dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
+
+
+install docker engine ==>> 
+sudo dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+
+
+check== docker --version
+     == systemctl enable --now docker
+     == systemctl status docker
+
+
+
+---container run commands ===>>> docker [object] [verb] [options] [image name]
+
+---object ===>>> 1. container
+                 2. image
+                 3. network
+                 4. volume
+
+---verb ===>>>  1. ls
+                2. rm
+                3. pull
+                4. start
+                5. stop
+                6. create
+ 
+
+---options ===>>> 1. -a => show stop container
+                  2. -d => background
+                  3. -L => list container
+                  4. -q => running container id
+                  5. -qa => all container id show
+
+example command container run ==>> docker container run -d --name coco httpd       [--name = container name]
+          o/s container image ==>> docker container run -it -d ubuntu              [-i= insert] [ t = terminal ]
+                                                                 
+           [ubuntu image run command ==>> /bin/bash ]
+   
+
+
+
