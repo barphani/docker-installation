@@ -1,0 +1,104 @@
+docker container commands and web-server installation
+
+$ docker container ls                ===>>> show running container
+$ docker container ls -a             ===>>> show running and stop container
+$ docker container ls -l             ===>>> latest container show
+$ docker container ls -q             ===>>> show running container id
+$ docker container ls -qa            ===>>> all container id show
+
+$ docker image ls                    ===>>> show container images
+
+$ docker container run httpd         ===>>> run container but foreground
+$ docker container run -d httpd      ===>>> run container but background
+
+$ docker container rm con_name_id          ===>>> stop the container before removing 
+$ docker container rm -f con_name_id       ===>>> forcefully removing container 
+
+$ docker container stop cont_name          ===>>> stop container
+$ docker container start cont_name         ===>>> start container
+
+$ docker container create httpd            ===>>> create container not start
+
+
+$ docker container run -d --name myweb nginx         ===>>> provide name for container and -d=detach mode 
+$ docker container exec -it myweb /bin/bash          ===>>> enter in container
+
+$ docker container stop $(docker container ls -q)    ===>>> all running container id stop
+$ docker container rm $(docker container ls -qa)     ===>>> all container remove
+$ docker container prune                             ===>>> remove all stop container
+
+
+*************
+O/S image for container run
+
+$ docker container run -d ubuntu         ===>>> container run but Immediately exited because terminal not attach
+$ docker container run -it -d ubuntu     ===>>> terminal attach in ubuntu container, inside the ubuntu container is /bin/bash command 
+ 
+ *** shortcut == [ ctrl + p + q ] = exit container but container not exited
+
+
+$ docker container attach cont_name                 ===>>> enter o/s image container only
+
+***[ /usr/local/apache2/htdocs/index.html ]         ===>>> web-container image user-data (website data)
+*** copy data for inside container and container to docker host
+$ docker container cp  file_path  cont_name:/usr/local/apache2/htdocs/index.html 
+
+
+*"troubleshooting AND monitoring"**
+$ docker container inspect cont_name                ===>>> full details for container
+$ docker container top cont_name                    ===>>> show process of container
+$ docker container logs cont_name		    ===>>> logs of container
+$ docker container logs -f conr_name	            ===>>> show generate new logs and live monitoring
+
+~get hostname
+$ docker container run --hostname docker.traing.com -d --name myapp httpd       ===>> get hostname
+
+$ docker container inspect  myapp  ===>>> private ip - 172.2.0.2
+%CURL
+$ curl 172.2.0.2     ===>>> it works
+
+
+~NOTE
+$ docker system events --since 5m		    ===>>> show docker daemon work after 5minuts
+
+
+
+***inside container run command from docker host
+$ docker container exec cont_name ls                ===>>> inside container file list
+$ docker container exec cont_name pwd               ===>>> inside container pwd directory show
+
+
+
+
+
+
+
+@@@ WEB-SERVER PROJECT FROM CONTAINER
+*port maping
+$ docker container run -d --name myweb -p hostport:containerport httpd
+                                              (80):(80)
+$ docker container ls   ==>> check port
+
+****if searching not work then container stop and start
+free css template download = wget and unzip 
+
+
+$ cd unzip_file
+$ docker container cp . myapp:/usr/local/apache2/htdocs/    ===>>> copy all currant data to /usr/local/apache2/htdocs
+
+
+
+***second port maping
+$ docker container run -d --name web-application -p 82:80 nginx
+
+~in allow 82 port in security group 
+ and search browser
+
+
+
+
+
+  
+
+ 
+  
