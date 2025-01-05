@@ -1,0 +1,63 @@
+***container restart policy***
+1. NONE (default)
+2. on-failure
+3. always
+4. unless-stopped
+
+
+*1. NONE        ==>>   means no restart police and this is the by default in container
+ 
+
+*2. on-failure  ==>>   If the container exits due to an "error", the container will automatically restart.
+   
+ \\practical >>>
+         $ docker container run --restart on-failure --name webapp -d httpd
+         $ docker container inspect webapp
+         $ docker container top webapp    ===>> process id check of container
+         $ ps -aux | grep httpd           ===>> process id > 2506
+         $ kill -9 2506
+         $ docker container ls -a         ===>> restart now before 2 second 
+         
+     * $ watch docker container ls        ===>> this watch command live monitoring for 'docker container ls'
+     
+     * $ echo $?    ===>>    0         = no error
+                             1,2,3...  = error
+       $ man useradd   >>    error codes
+
+
+
+
+ *3.  Always     ===>>>   
+                        If the container closes due to an error or due to some other reason, then it will be restarted again.But if we stop the container manually it will not start again. This container will then restart when we start the docker daemon.
+   
+   
+  \\practical >>>
+          $ docker container run -d --name os/image --restart always ubuntu sleep 10
+          $ docker container ls    ==>>  10 second run and then stop
+          $ docker container rm os/image
+          $ docker container ls    ==>>  restart again
+          $ docker container stop os/image 
+          $ systemctl restart docker     ==>>  start, stop container
+          
+
+
+*4.  unless-stopped    ===>
+                              Always policy and this is policy a same no deference But if we stop the container manually then this container will not restart even after restarting the Docker service.
+
+
+
+
+
+          
+
+
+
+
+
+          
+
+
+
+
+         
+         
