@@ -55,6 +55,54 @@ example command container run ==>> docker container run -d --name coco httpd    
           o/s container image ==>> docker container run -it -d ubuntu              [-i= insert] [ t = terminal ]
                                                                  
            [ubuntu image run command ==>> /bin/bash ]
+
+
+
+
+
+
+
+*****npm software for ubuntu and install game for container
+
+
+   53  apt update
+   54  apt install nodejs -y
+   55  npm install
+   56  apt install npm -y
+   57  npm install
+   58  ls
+   59  node main.js
+
+$ vim Dockerfile
+       ||
+FROM    ubuntu
+RUN     apt-get update
+RUN     apt-get install nodejs npm -y
+RUN     mkdir /game
+COPY    . /game
+WORKDIR /game
+RUN     npm install
+CMD     ["node", "main.js"]
+
+
+   68  docker image build . -t barphani/game
+   69  docker image ls
+   70  docker container ls
+   71  docker container run -d --name gamboll -p 80:3000 barphani/game
+   72  docker container ls
+   73  history
+
+
+
+
+
+
+
+
+
+
+
+
    
 
 
