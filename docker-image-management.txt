@@ -1,0 +1,206 @@
+***docker-image-management***
+
+$ docker image ls                  ===>>> show all images for local host
+$ docker image rm  image_name      ===>>> remove image 
+$ docker image prune -a            ===>>> all images remove
+
+
+~~~image pull from -  hub.docker.com  -  this is docker repository
+** other repository 
+   1.  GCR  => Google container registry
+   2.  ACR  => amazon container registry
+   3.  ACR  => Azure container registry
+ 
+ ~ 4.  Redhat container registry
+
+
+
+!!! three type of image in docker.io
+  
+  1. official image      =>    create by docker
+  2. verified images     =>    create this images by organization  
+  3. user create images  =>    create by user and upload in docker-hub
+
+
+# docker.io/library/nginx:latest
+ 
+  docker.io    =>  Registry (pull from hub.docker)
+  library      =>  account name in registry
+  nginx:letest =>  image name and tag
+
+
+
+^^^ Searching => hub.docker.com => search 'ubi' => redhat/ubi8
+   
+ $ docker image pull redhat/ubi8 
+                      /      \
+                  account   image
+                  name       name
+$ docker login   => hub.docker.com
+
+$ docker image pull barphani/webapp1
+
+
+~~~
+ Redhat container registry   
+^^^ search  => redhat image registry
+
+$ docker login registry.redhat.io
+  username = barphnai
+  password = ********
+$ docker image pull registry.redhat.io/openshift3/ose-pod:v3.11.784-1.gc4590b1
+
+
+
+
+
+
+****DOCKER IMAGE CREATE**** PULL // PUSH // COMMIT // BUILD 
+=> 2 types method to create images
+ 
+
+ 1. Docker commit method    ==>>  this is easy method
+ 2. Docker method           ==>>  more Advance method
+
+
+
+1.>>>  Docker commit method practical///
+
+   - first of all create container
+   $ docker container run -d --name web -p ip(172.0.2.1):80:80 httpd        =>> more ip for machine so you should mention then you can mention
+   
+  ^^^search => free css template - copy link address
+   $ wget paste_css_address 
+   $ unzip ***
+
+   $ docker container cp ***/. web:/usr/local/apache2/htdocs/                ^^^search= browser
+ 
+
+ @ IMAGE CREATE FOR COMMIT METHOD
+
+   
+  $ docker login
+
+  $ docker commit -a "Arvind Barphani" web barphani/commit_image:A1
+                   /   \                |       \            \     \ 
+              Author   Author_name  container  docker         image  tag (by default= latest)
+                                      name     account name    name
+
+  
+    !!! => yha per docker ka account name (barphani) dena important hai because jab hum docker account per yha image push kare to ye hoga nhi
+
+  
+
+  $ docker image push barphani/commit_image:A1 
+
+
+
+
+2.>>> DOCKER METHOD***
+  ))) for UBUNTU...
+   $ mkdir coco
+   $ wget free_css_template
+   $ unzip free_css_template    =>> html/
+   $ cd coco
+   co  $ vim Docker file     =>>  
+          ||
+FROM    ubuntu
+RUN     apt update
+RUN     apt install apache2 -y
+COPY    html/. /var/www/html/
+EXPOSE  8080
+CMD     ["apachectl", "-D", "FOREGROUND"]
+   
+
+
+  co  $ docker image build . -t barphani/web_image 
+                          /    \         /
+           current file for    tag=image_name 
+             Dockerfile
+ 
+  $ docker image ls
+  $ docker container run -itd --name webapp -p 8080:80 barphani/web_image
+
+
+
+ 
+ )))for REDHAT...
+ 
+  $ mkdir redhat
+  file docker
+
+  $ cd redhat
+  $ vim Dockerfile
+           ||
+
+FROM    redhat/ubi8                                                                                                     
+RUN     yum install -y httpd                                                                                            
+COPY    html/. /var/www/html                                                                                            
+EXPOSE  3001                                                                                                            
+CMD     ["httpd", "-D", "FOREGROUND"]
+
+  $ docker image build . -t barphani/redhat_web
+
+  
+ 
+
+
+
+
+
+
+
+
+  
+
+
+
+ 
+
+  
+  
+
+  
+    
+                                                         
+
+  
+   
+    
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
