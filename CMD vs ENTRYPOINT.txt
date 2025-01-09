@@ -1,0 +1,100 @@
+FROM    ubuntu
+RUN     apt-get update
+RUN     apt-get install nodejs npm -y
+RUN     mkdir /game
+COPY    . /game                                   # ADD         =>> add instruction se hum content copy bhi kra sakte hai and dusra hum add instruction se
+                                                                    hum 'URL' specify kar sakte hai jes se ki jab image build hogi to us url se jo bhi 
+                                                                    content hoga vo docker image ke andar directly download ho jayega  
+
+
+WORKDIR /game
+RUN     npm install
+CMD     ["node", "main.js"]                       # ENTRYPOINT  =>> CMD se jo bhi argument aage specify karte hai vo hum log us argument ko over write kar
+                                                                    sakte hai , command ke thru, jab hum container run kar rahe hote hai
+                                                                    but
+                                                                    ENTRYPOINT isme pura argument over write nhi kar sakte ,, only for option specify kar 
+                                                                    sakte hai command line ke thru
+
+
+
+# ENTRYPOINT OVER write ==   "--entrypoint sleep 20"
+
+
+
+
+///practical  =>>  CMD vs ENTRYPOINT
+
+  $ mkdir ubuntu
+  $ cd ubuntu 
+  $ vim Dockerfile 
+         ||
+    FROM   ubuntu
+    CMD    ["sleep", "10"]
+    
+  $ docker image build . -t coco
+  $ docker container run -d coco
+  $ docker container ls                       =>> after 10 second this container exited
+  $ docker container run -d coco sleep 20     =>> CMD command over write and execute this command = sleep 20
+  
+
+  
+ //practical ENTRYPOINT
+
+  $ mkdir Milton
+  $ cd Milton
+  $ vim Dockerfile
+         ||
+    FROM        ubuntu
+    ENTRYPOINT  ["sleep", "10"]
+
+  $ docker image build . -t sleeper1
+  $ docker container run -d sleeper1 sleep 20      =>>  to yha per sleep command over write nhi ho sakti but option over write kar sakte hai
+  $ docker container ls
+  $ docker container logs sleeper1
+  
+  $ vim Dockerfile
+          ||
+    FROM        ubuntu
+    ENTRYPOINT  ["sleep"]
+
+  $ docker image build . -t sleeper
+  $ docker container run -d sleeper     =>> aase he start kar dege to run nhi hoga because humne second specify nhi kiya
+  $ docker container run -d sleeper 30  =>> 30 second tak run rahega container
+  $ docker container ls
+  
+
+
+
+
+//combination CMD and ENTRYPOINT
+  $ vim Dockerfile
+         ||
+    FROM        ubuntu
+    ENTRYPOINT  ["sleep"]     =>> so ENTRYPOINT, CMD se 10 second use kar lega and ab hum over write bhi kar sakte hai
+    CMD		["10"]
+ 
+  
+  $ docker image build . -t sleeper3
+  $ docker image ls
+  $ docker container run -d testing 20
+  $ docker container ls 
+  $ watch docker container ls 
+  
+
+
+* ENTRYPOINT CHANGE
+  
+  $ docker container run -d --entrypoint sleep 10 sleeper3
+    
+
+
+
+
+
+
+
+
+
+
+
+ 
