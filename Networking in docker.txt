@@ -1,0 +1,60 @@
+***Networking in docker***
+
+=>>  3 types of network in docker host
+  
+  1. Bridge [by default]
+  2. none
+  3. Host
+
+
+1. Bridge practical///
+    
+   $ ip add
+   $ docker network ls
+   $ docker network create --driver bridge --subnet 187.132.0.0/16 arvind-net
+                                      /                                 \
+                                  network_type                      network_name 
+   $ docker network ls  
+   
+
+   $ docker container run -itd --name servera --network arvind-net ubuntu
+   $ docker container run -itd --name serverb --network arvind-net ubuntu
+
+
+   $ docker container attach servera
+ c $ apt update && apt install inetutils-ping -y
+ c $ ping ip_serverb  ==>> will be ip ping because this inside the same network
+   
+
+   $ docker network create --driver bridge --subnet 187.132.0.0/16 coco-net
+   
+   $ docker network disconnect arvind-net servera    
+   $ docker container inspect servera 
+   $ docker network connect coco-net servera 
+   $ docker container inspect servera                =>> ip address change
+
+
+
+
+2. host type***
+
+   $ docker container run -d --name abc --network host centos/httpd    =>> (by default 80 port listen)
+   $ docker container ls         =>> no port assign because this is host network = 80:80 , 400:400 not 8080:80
+   $ docker container inspect abc
+   $ docker container run -d --network host centos/httpd    =>> not run because same port assign for abc container 
+   
+   $ docker container logs container_name
+   
+   
+   
+   
+
+    
+     
+
+
+
+
+
+
+
