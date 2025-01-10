@@ -1,0 +1,40 @@
+***DOCKER VOLUME***
+
+TWO types of docker volume
+
+1.bind          ==>> mount by any directory
+2.volume mount  ==>> mount by docker deamon
+
+
+1.bind practical ==>>  
+
+  $ mkdir /data   =>   $ cd /data    =>   $ vim index.html = hello this is bind volume
+  
+  $ docker container run -d --name volume -v /data:/var/www/html -p 80:80 centos/httpd
+
+  $ curl ip  = hello this.....
+  
+
+
+2.volume mount practical ==>>
+
+  $ docker container run -d --name volume1 -v docroot:/var/www/html -p 8080:80 centos/httpd
+  
+
+  ### docroot =  in docker host = /var/lib/docker = docroot
+  
+  
+@@@ new command ---
+
+
+  $ docker container run -d --name volume2 --mount type=bind,source=/data,destination=/var/www/html,readonly -p 80:80 centos/httpd
+
+  $ docker container run -d --name volume3 --mount type=volume,source=docroo3,destination=/var/www/html,readonly -p 80:80 centos/httpd
+
+  
+$ docker container inspect container_name
+
+
+ 
+
+ 
