@@ -1,0 +1,105 @@
+****wordpress_website****
+
+ =>> launch ubuntu machine on aws and ssh and sudo -i
+ 
+ $ apt updata
+ $ apt install -y mysql-server vim wget unzip bash-completion
+ $ systemctl status MySQL
+ $ mysql_secure_installation
+ $ mysql -u root -p
+
+
+MySQL   $ create database wordpress;
+        $ show databases;
+        $ use wordpress;     =>> enter wordpress database
+        $ show tables;
+        
+
+       $ create user wordpress@'%' identified by 'redhat@local';
+                       /         \                      \
+                  new_user     can login            difficult password
+                    name        from anywhere
+      
+       $ show databases;   =>> wordpress
+
+       $ grant all on wordpress.* to wordpress@'%';
+            /              \     \          \
+        all permission   DB_name   in all    user
+            grant                  tables     name
+
+       $ flush privileges;     =>> entry updates and tables reload
+       
+       $ exit
+  
+ 
+
+***INSTALL apache2***
+
+
+  $ apt update && apt install apache2 -y
+  $ systemctl status apache2             =>> running service
+  
+
+  ^^^ wordpress php based so install all php plugin 
+
+ ^^^ search  => install php plugin in ubuntu 22 for wordpress website
+
+  $ sudo apt update
+  $ sudo apt install apache2 mysql-server php php-mysql libapache2-mod-php php-curl php-gd php-mbstring php-xml php-xmlrpc unzip curl -y
+
+
+ ^^^ search =>> download wordpress = wordpress url copy
+
+  $ wget wordpress_url_paste
+  $ unzip wordpress
+  
+  $ cd /var/www/html 
+  $ rm -f index.html
+  $ mv /root/wordpress/* /var/www/html
+  $ systemctl restart apache2
+
+
+  
+
+^^^ search INSTENCE ip =>> wordpress web show 
+
+html   $ cp wp-config-sample.php wp-config.php
+       $ vim wp-config.php
+                  //
+           DB_name =  wordpress
+           DB_user =  wordpress
+           DB_host =  localhost
+           DB_pass =  redhat@local
+  
+^^^ search =>> instance ip => login wordpress
+
+^^ search themes =>> conceptly  +++>> not installation 
+
+  $ vim wp-config.php   ==>>> entry = defaine( 'FS_METHOD', 'direct');
+
+  $ chown -R www-data /var/www/html      ==>>> www-data user of apache2 webserver
+
+
+
+^^ search again =>> now themes installation  
+
+
+ 
+
+
+
+    
+  
+
+     
+       
+     
+
+  
+
+
+
+
+
+
+
