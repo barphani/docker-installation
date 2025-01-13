@@ -1,0 +1,143 @@
+***WORDPRESS with DATABASE***
+
+---first create DB container
+
+ $ docker container run -d --name db -v DB:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=redhat -e MYSQL_DATABASE=wordpress MySQL
+
+ $ docker container ls
+
+ $ docker container exec db -it /bin/bash    =>> check 
+
+ $ docker container inspect db
+
+ $ sudo apt install mysql-server -y
+ 
+ $ mysql -h -u root -p 
+
+ 
+❤️❤️
+---second create wordpress container
+
+ $ docker container run -d --name wordpress -v wp:/var/www/html -e WORDPRESS_DB_HOST=172.17.0.2 -e WORDPRESS_DB_NAME=wordpress -e WORDPRESS_DB_USER=root -e WORDPRESS_DB_PASSWORD=redhat -p 80:80 wordpress
+
+
+ ^^^🚙 search =>> wordpress web-site is running
+
+
+😍😍😍
+😶‍🌫️😶‍🌫️😶‍🌫️ MOST NOTE >>>
+
+ BUT =>> suppose if the container shuts down and when restarted its IP changes then WordPress will not be able to access the database so we can give the hostname of the database container in place of IP
+
+FOR 🤤this we will create a new network and connect both the containers because by default bridge network cannot provide the hostname.
+
+
+🤗🤗 create network coco 
+
+ $ docker network create --driver bridge --subnet 197.168.0.0/16 coco-net
+
+ $ docker container rm -f wordpress  =>>  [[Because we need to provide the hostname of the database and change mount volume wordpress]] 
+
+
+
+ $ docker container run -d --name wordpress -v wordpress:/var/www/html -e WORDPRESS_DB_HOST=db.server.com -e WORDPRESS_DB_NAME=wordpress -e WORDPRESS_DB_USER=root -e WORDPRESS_DB_PASSWORD=redhat -p 80:80 wordpress
+
+
+ $ docker network disconnect bridge db
+ $ docker network disconnect bridge wordpress
+
+ $ docker network connect coco-net db
+
+ $ docker container inspect db   =>> ip
+ 
+ $ vim /etc/hosts
+             ||
+          container_ip
+
+ $ docker network connect coco-net wordpress
+
+ 
+ ^^^search >> instecnce ip  >> show wordpress web
+ 😜😜😜😜
+
+
+                 ||
+    Now we don't need to remove the WordPress container again and again, we just need to remove the WordPress container once to give the hostname
+ 
+
+
+
+
+
+
+🏍️🏍️🏍️🏍️🏍️🏍️🤠🤠🤠 @@@ environment variables---
+
+   Environment Variable         	Description	                                     Example Value
+
+1. MYSQL_ROOT_PASSWORD	           Password for the MySQL root user.                         rootpassword123
+                                  (Mandatory if creating a new database.)  
+
+
+   MYSQL_DATABASE	           Name of the default database to be                        my_database                     
+                                    created during initialization.	      
+  
+
+   MYSQL_USER	                   Name of a new non-root user to be created.	             my_user
+
+
+   MYSQL_PASSWORD	           Password for the new non-root user specified              mypassword123
+                                      in MYSQL_USER.
+
+
+   MYSQL_ALLOW_EMPTY_PASSWORD	   Allows the root password to be empty                      yes or no               
+                                       (not recommended).	     
+
+
+   MYSQL_RANDOM_ROOT_PASSWORD	Generates a random password for the root user and             yes or no
+                                    logs it to standard output.	
+
+
+   MYSQL_INITDB_SKIP_TZINFO	Skips loading timezone information during initialization.	yes
+
+
+   TZ	                          Sets the container's timezone.	                      Asia/Kolkata
+
+🏍️🏍️🏍️🏍️🏍️🏍️🤠🤠🤠
+
+
+
+
+
+😍😍😍😍😍😍😍😍😍😍
+  
+  ***WORDPRESS environment variables
+
+     DB_NAME       =  wpbench
+     DB_USER       =  wpuser
+     DB_PASSWORD   =  password
+     DB_HOST       =  localhost
+
+🏍️🏍️🏍️🏍️🏍️
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
